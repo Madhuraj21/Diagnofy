@@ -1,12 +1,59 @@
-# React + Vite
+# Dental Diagnosis Puzzle
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive dental diagnosis quiz app built with React and Vite.
 
-Currently, two official plugins are available:
+## Features
+- Realistic dental clinical scenarios
+- Multiple-choice questions with instant feedback
+- Hints and detailed explanations for each scenario
+- Responsive, modern UI
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Getting Started
 
-## Expanding the ESLint configuration
+### Prerequisites
+- Node.js (v18 or newer recommended)
+- npm (comes with Node.js)
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Installation
+```sh
+npm install
+```
+
+### Development
+```sh
+npm run dev
+```
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+### Build for Production
+```sh
+npm run build
+```
+
+### Preview Production Build
+```sh
+npm run preview
+```
+
+## Deployment
+This app is ready for deployment on [Vercel](https://vercel.com):
+1. Push your code to GitHub.
+2. Import your repo in Vercel and deploy (Vercel auto-detects Vite projects).
+
+## Project Structure
+```
+dental-diagnosis-puzzle/
+├── public/           # Static assets (favicon, SVGs)
+├── src/
+│   ├── components/   # React components
+│   ├── data/         # Scenario data
+│   ├── App.jsx       # Main app logic
+│   ├── App.css       # App styles
+│   └── ...
+├── index.html        # App entry point
+├── package.json      # Project metadata and scripts
+└── vite.config.js    # Vite configuration
+```
+
+## License
+MIT
