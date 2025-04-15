@@ -38,6 +38,10 @@ body, html {
   overflow-x: hidden;
   /* Allow vertical scroll if content overflows */
   overflow-y: visible;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 main {
@@ -59,6 +63,11 @@ main {
   padding-left: 0;
   padding-right: 0;
   /* Let content grow naturally */
+  margin-top: 8px;
+  margin-bottom: 8px;
+  /* Add a little horizontal margin for extra comfort on very small screens */
+  margin-left: 2px;
+  margin-right: 2px;
 }
 
 .logo {
