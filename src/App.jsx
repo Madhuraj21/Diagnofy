@@ -120,77 +120,77 @@ function App() {
           </button>
         )}
         {showExplanation && (
-          <div className="explanation-container">
-            <span className="explanation-title">Explanation</span>
-            {(() => {
-              const [main, rest] = scenario.explanation.split('Rationale:');
-              const [rationale, whyIncorrect] = rest ? rest.split('Why other options are incorrect:') : [null, null];
-              // Extract the correct answer line for bolding and styling
-              let correctLine = null;
-              let mainRest = main;
-              if (main && main.match(/Correct Answer: \d+\./)) {
-                const match = main.match(/(Correct Answer: \d+\. )(.*)/);
-                if (match) {
-                  correctLine = match[2];
-                  mainRest = main.replace(match[0], '');
-                }
-              }
-              return (
-                <>
-                  {correctLine && (
-                    <div style={{
+          <div className="explanation-container" style={{padding: '18px 10px 18px 10px', maxWidth: 520, margin: '0 auto'}}>
+            <span className="explanation-title" style={{marginBottom: 10, fontSize: '1.18rem'}}>Explanation</span>
+            <div className="explanation-section" style={{marginBottom: 8, padding: 0}}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                background: 'linear-gradient(90deg, #e0e7ff 60%, #f3f4f6 100%)',
+                border: '2px solid #6c63ff',
+                borderRadius: 12,
+                padding: '12px 16px',
+                boxShadow: '0 2px 8px #6c63ff22',
+                marginBottom: 0
+              }}>
+                <span style={{
+                  background: '#6c63ff',
+                  color: '#fff',
+                  borderRadius: 20,
+                  padding: '4px 16px',
+                  fontWeight: 700,
+                  fontFamily: 'Roboto Mono, monospace',
+                  fontSize: '1.08em',
+                  letterSpacing: '0.01em',
+                  minWidth: 70,
+                  textAlign: 'center',
+                  boxShadow: '0 1px 4px #6c63ff33'
+                }}>Correct Option: {scenario.correctAnswerId}</span>
+                <span style={{color: '#23262f', fontWeight: 600, fontFamily: 'Montserrat, Arial, sans-serif', fontSize: '1.08em'}}>
+                  {scenario.options.find(opt => opt.id === scenario.correctAnswerId)?.text}
+                </span>
+              </div>
+              <div style={{marginTop: 6, marginBottom: 2, color: '#23262f', fontWeight: 500, fontSize: '1.01em'}}>
+                {scenario.optionExplanations && scenario.optionExplanations[scenario.correctAnswerId]}
+              </div>
+              <div style={{marginTop: 6, color: '#23262f', fontSize: '1.01em', background: '#f8fafc', borderRadius: 8, padding: '10px 12px', boxShadow: '0 1px 4px #e0e7ff55'}}>{scenario.mainExplanation || "No explanation provided."}</div>
+            </div>
+            <div className="explanation-section" style={{marginTop: 8}}>
+              <strong style={{marginBottom: 6, display: 'block', color: '#6c63ff', fontSize: '1.04em'}}>Why these options are incorrect?</strong>
+              <div style={{display: 'flex', flexDirection: 'column', gap: 4, marginTop: 2}}>
+                {scenario.options.filter(opt => opt.id !== scenario.correctAnswerId).map(opt => (
+                  <div key={opt.id} style={{
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    gap: 10,
+                    background: '#23262f',
+                    border: '1.5px solid #393c4d',
+                    borderRadius: 10,
+                    padding: '8px 10px',
+                    boxShadow: '0 1px 4px rgba(0,0,0,0.07)',
+                    minHeight: 44
+                  }}>
+                    <span style={{
+                      background: '#fbbf24',
+                      color: '#23262f',
+                      borderRadius: 16,
+                      padding: '2px 12px',
                       fontWeight: 700,
-                      fontFamily: 'Montserrat, Arial, sans-serif',
-                      fontSize: '1.08rem',
-                      color: '#6c63ff',
-                      marginBottom: 6,
-                      letterSpacing: '0.01em',
-                    }}>
-                      Correct Option:<br/>
-                      <span style={{fontWeight: 800, color: '#23262f', background:'#fbbf24', borderRadius:4, padding:'2px 7px', fontSize:'1.08em'}}>
-                        Option {scenario.options.findIndex(opt => opt.text === correctLine) + 1}: {correctLine}
-                      </span>
+                      fontFamily: 'Roboto Mono, monospace',
+                      fontSize: '1em',
+                      minWidth: 60,
+                      textAlign: 'center',
+                      marginTop: 2
+                    }}>Option {opt.id}</span>
+                    <div style={{color: '#fff', fontWeight: 500, fontFamily: 'Montserrat, Arial, sans-serif', lineHeight: 1.5, display: 'flex', flexDirection: 'column'}}>
+                      <span style={{fontWeight: 600, marginBottom: 0}}>{opt.text}</span>
+                      <span style={{fontWeight: 400, fontSize: '0.98em'}}>{scenario.optionExplanations && scenario.optionExplanations[opt.id]}</span>
                     </div>
-                  )}
-                  {mainRest && <div className="explanation-section">{mainRest.trim()}</div>}
-                  {rationale && <div className="explanation-section"><strong>Rationale:</strong><br/>{rationale.trim()}</div>}
-                  {whyIncorrect && (
-                    <div className="explanation-section">
-                      <strong style={{color: '#6c63ff'}}>Why these options are incorrect:</strong>
-                      <div style={{margin: '10px 0 0 0'}}>
-                        {(() => {
-                          // Always split by option: look for patterns like Option: Reason
-                          const splitOptions = whyIncorrect
-                            .split(/(?=[A-Z][^:]*:)/g)
-                            .map(s => s.trim())
-                            .filter(Boolean);
-                          return splitOptions.map((opt, idx) => {
-                            const colonIdx = opt.indexOf(':');
-                            if (colonIdx > 0) {
-                              const label = opt.slice(0, colonIdx+1);
-                              const reason = opt.slice(colonIdx+1).trim();
-                              return (
-                                <div key={idx} className="explanation-option-reason">
-                                  <span className="explanation-option-label" style={{color:'#fbbf24', fontWeight:700, fontFamily:'Roboto Mono, monospace', fontSize:'1em', marginRight:6}}>{label}</span>
-                                  <span className="explanation-option-text" style={{color:'#e0e0e0', fontWeight:500, fontFamily:'Montserrat, Arial, sans-serif', fontSize:'1em'}}>{reason}</span>
-                                </div>
-                              );
-                            }
-                            // If no colon, treat the whole as reason
-                            return (
-                              <div key={idx} className="explanation-option-reason">
-                                <span className="explanation-option-label"></span>
-                                <span className="explanation-option-text" style={{color:'#e0e0e0', fontWeight:500, fontFamily:'Montserrat, Arial, sans-serif', fontSize:'1em'}}>{opt}</span>
-                              </div>
-                            );
-                          });
-                        })()}
-                      </div>
-                    </div>
-                  )}
-                </>
-              );
-            })()}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
         {showExplanation && (
